@@ -1,0 +1,88 @@
+### Requisições de teste (IntelliJ HTTP Client ou extensão "REST Client" do VS Code).
+### Também servem de roteiro para montar no Postman. Rode na ordem.
+
+### 1. Criar tutor
+POST http://localhost:8080/tutores
+Content-Type: application/json
+
+{
+  "nome": "Ana Souza",
+  "email": "ana@email.com",
+  "telefone": "11999998888"
+}
+
+### 2. Listar tutores
+GET http://localhost:8080/tutores
+
+### 3. Criar pet (tutorId precisa existir)
+POST http://localhost:8080/pets
+Content-Type: application/json
+
+{
+  "nome": "Thor",
+  "especie": "CACHORRO",
+  "raca": "Labrador",
+  "dataNascimento": "2020-03-15",
+  "tutorId": 1
+}
+
+### 4. Pets de um tutor
+GET http://localhost:8080/tutores/1/pets
+
+### 5. Agendar consulta (dataHora precisa ser no futuro)
+POST http://localhost:8080/consultas
+Content-Type: application/json
+
+{
+  "petId": 1,
+  "dataHora": "2027-01-20T14:30:00",
+  "motivo": "Vacina anual",
+  "valor": 150.00
+}
+
+### 6. Histórico de consultas do pet
+GET http://localhost:8080/pets/1/consultas
+
+### 7. Remarcar consulta (só funciona se AGENDADA)
+PUT http://localhost:8080/consultas/1
+Content-Type: application/json
+
+{
+  "petId": 1,
+  "dataHora": "2027-01-22T10:00:00",
+  "motivo": "Vacina anual",
+  "valor": 150.00
+}
+
+### 8. Marcar consulta como realizada
+PATCH http://localhost:8080/consultas/1/realizar
+
+### 9. Tentar cancelar consulta já realizada (409)
+PATCH http://localhost:8080/consultas/1/cancelar
+
+### 10. Erro de validação (400)
+POST http://localhost:8080/tutores
+Content-Type: application/json
+
+{
+  "nome": "",
+  "email": "email-invalido",
+  "telefone": "123"
+}
+
+### 11. Espécie inexistente no enum (400)
+POST http://localhost:8080/pets
+Content-Type: application/json
+
+{
+  "nome": "Nemo",
+  "especie": "PEIXE",
+  "dataNascimento": "2023-01-01",
+  "tutorId": 1
+}
+
+### 12. Excluir pet com consultas (409)
+DELETE http://localhost:8080/pets/1
+
+### 13. Excluir tutor com pets (409)
+DELETE http://localhost:8080/tutores/1
