@@ -11,22 +11,9 @@ API REST para cadastro de tutores, pets e agendamento de consultas.
 - Maven
 - JUnit 5 + Mockito
 
-## Como executar
-
-Abra a pasta na IDE (IntelliJ: *Open* → selecione o `pom.xml` → *Open as Project*), espere o Maven baixar as dependências e rode a classe `ClinicaApplication`. A API sobe em `http://localhost:8080`.
-
-Com Maven instalado, pelo terminal:
-
-```bash
-mvn spring-boot:run
-mvn test
-```
 
 ## Modelo
 
-```
-Tutor 1 ──── N Pet 1 ──── N Consulta
-```
 
 - **Tutor**: nome, email (único), telefone
 - **Pet**: nome, especie (`CACHORRO`, `GATO`, `PASSARO`, `OUTRO`), raca, dataNascimento, tutor
@@ -79,8 +66,6 @@ exception   -> exceções da aplicação e GlobalExceptionHandler
 | PATCH  | `/consultas/{id}/realizar`  | Marca como REALIZADA          | 200     |
 | PATCH  | `/consultas/{id}/cancelar`  | Marca como CANCELADA          | 200     |
 
-Exemplos prontos de requisição em [`requisicoes.http`](requisicoes.http).
-
 ## Regras de negócio
 
 - E-mail de tutor é único (409).
@@ -90,23 +75,3 @@ Exemplos prontos de requisição em [`requisicoes.http`](requisicoes.http).
 - Só consulta `AGENDADA` pode ser alterada, realizada ou cancelada (409).
 - Consulta não é excluída, é cancelada (o histórico fica preservado).
 
-## Formato de erro
-
-```json
-{
-  "status": 400,
-  "message": "Erro de validação",
-  "path": "/tutores",
-  "timestamp": "2026-11-03T16:40:00",
-  "errors": {
-    "email": "E-mail inválido",
-    "telefone": "O telefone deve ter 10 ou 11 dígitos (só números, com DDD)"
-  }
-}
-```
-
-## Próximas etapas
-
-- [ ] Banco de dados (H2 -> PostgreSQL com Docker) usando Spring Data JPA
-- [ ] Autenticação com Spring Security + JWT
-- [ ] Versionamento com Git e publicação no GitHub
