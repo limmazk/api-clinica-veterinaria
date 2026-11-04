@@ -1,20 +1,13 @@
 package com.arthur.clinica.repository;
 
 import com.arthur.clinica.model.Pet;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface PetRepository {
-    Pet save(Pet pet);
-
-    List<Pet> findAll();
-
-    Optional<Pet> findById(Long id);
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+@Repository
+public interface PetRepository extends JpaRepository<Pet, Long> {
 
     List<Pet> findByTutorId(Long tutorId);
 

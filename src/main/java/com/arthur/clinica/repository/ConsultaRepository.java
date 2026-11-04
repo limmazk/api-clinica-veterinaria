@@ -1,20 +1,13 @@
 package com.arthur.clinica.repository;
 
 import com.arthur.clinica.model.Consulta;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ConsultaRepository {
-    Consulta save(Consulta consulta);
-
-    List<Consulta> findAll();
-
-    Optional<Consulta> findById(Long id);
-
-    boolean existsById(Long id);
-
-    void deleteById(Long id);
+@Repository
+public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     List<Consulta> findByPetId(Long petId);
 

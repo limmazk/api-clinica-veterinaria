@@ -6,6 +6,7 @@ import com.arthur.clinica.model.Consulta;
 import com.arthur.clinica.model.Pet;
 
 public class ConsultaMapper {
+
     private ConsultaMapper() {
     }
 

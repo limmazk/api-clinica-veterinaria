@@ -2,23 +2,34 @@
 
 API REST para cadastro de tutores, pets e agendamento de consultas.
 
-> **Estado atual:** os dados ficam **em memória** (num `Map` dentro de cada Repository) e são perdidos quando a aplicação reinicia. Banco de dados e autenticação JWT serão adicionados nas próximas etapas.
-
 ## Tecnologias
 
 - Java 17
-- Spring Boot 3.5 (Web, Validation)
+- Spring Boot 3.5 (Web, Validation, Data JPA)
+- PostgreSQL 16 (Docker)
+- Lombok
+- Springdoc OpenAPI (Swagger)
 - Maven
 - JUnit 5 + Mockito
 
 ## Como executar
 
-Abra a pasta na IDE (IntelliJ: *Open* → selecione o `pom.xml` → *Open as Project*), espere o Maven baixar as dependências e rode a classe `ClinicaApplication`. A API sobe em `http://localhost:8080`.
-
-Com Maven instalado, pelo terminal:
+1. Crie o arquivo `.env` na raiz a partir do modelo `.env.example` e preencha a senha.
+2. Suba o banco:
 
 ```bash
-mvn spring-boot:run
+docker compose up -d
+```
+
+3. Rode a classe `ClinicaApplication` pela IDE (ou `mvn spring-boot:run`).
+
+- API: `http://localhost:8080`
+- Swagger: `http://localhost:8080/swagger-ui.html`
+- Banco: `localhost:5433`
+
+Testes:
+
+```bash
 mvn test
 ```
 
@@ -37,7 +48,7 @@ Tutor 1 ──── N Pet 1 ──── N Consulta
 ```
 controller  -> recebe a requisição HTTP e devolve ResponseEntity
 service     -> regras de negócio
-repository  -> acesso aos dados (hoje: memória; depois: JPA + banco)
+repository  -> acesso aos dados (Spring Data JPA)
 model       -> classes de domínio e enums
 dto         -> o que entra (Request) e o que sai (Response) da API
 mapper      -> conversão Entity <-> DTO
@@ -107,6 +118,6 @@ Exemplos prontos de requisição em [`requisicoes.http`](requisicoes.http).
 
 ## Próximas etapas
 
-- [ ] Banco de dados (H2 -> PostgreSQL com Docker) usando Spring Data JPA
+- [x] Banco de dados PostgreSQL com Docker e Spring Data JPA
 - [ ] Autenticação com Spring Security + JWT
 - [ ] Versionamento com Git e publicação no GitHub

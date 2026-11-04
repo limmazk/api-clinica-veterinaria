@@ -4,6 +4,7 @@ import com.arthur.clinica.dto.ConsultaRequestDTO;
 import com.arthur.clinica.dto.ConsultaResponseDTO;
 import com.arthur.clinica.service.ConsultaService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,13 +13,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/consultas")
 public class ConsultaController {
-    private final ConsultaService consultaService;
 
-    public ConsultaController(ConsultaService consultaService) {
-        this.consultaService = consultaService;
-    }
+    private final ConsultaService consultaService;
 
     @PostMapping
     public ResponseEntity<ConsultaResponseDTO> create(@RequestBody @Valid ConsultaRequestDTO dto) {
