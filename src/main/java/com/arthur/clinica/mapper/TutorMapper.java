@@ -5,6 +5,7 @@ import com.arthur.clinica.dto.TutorResponseDTO;
 import com.arthur.clinica.model.Tutor;
 
 public class TutorMapper {
+
     private TutorMapper() {
     }
 

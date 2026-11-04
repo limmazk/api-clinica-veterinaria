@@ -12,9 +12,7 @@ target/
 .project
 .settings/
 
-### Sistema ###
 .DS_Store
 Thumbs.db
 
-### Segredos (vai importar na etapa do banco e do JWT) ###
 .env

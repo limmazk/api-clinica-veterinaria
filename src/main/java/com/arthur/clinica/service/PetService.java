@@ -9,38 +9,40 @@ import com.arthur.clinica.model.Pet;
 import com.arthur.clinica.model.Tutor;
 import com.arthur.clinica.repository.ConsultaRepository;
 import com.arthur.clinica.repository.PetRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PetService {
+
     private final PetRepository petRepository;
     private final ConsultaRepository consultaRepository;
     private final TutorService tutorService;
 
-    public PetService(PetRepository petRepository, ConsultaRepository consultaRepository, TutorService tutorService) {
-        this.petRepository = petRepository;
-        this.consultaRepository = consultaRepository;
-        this.tutorService = tutorService;
-    }
-
+    @Transactional
     public PetResponseDTO create(PetRequestDTO dto) {
         Tutor tutor = tutorService.buscarTutor(dto.tutorId());
         Pet salvo = petRepository.save(PetMapper.toEntity(dto, tutor));
         return PetMapper.toResponseDTO(salvo);
     }
 
+    @Transactional(readOnly = true)
     public List<PetResponseDTO> getAll() {
         return petRepository.findAll().stream()
                 .map(PetMapper::toResponseDTO)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public PetResponseDTO findById(Long id) {
         return PetMapper.toResponseDTO(buscarPet(id));
     }
 
+    @Transactional(readOnly = true)
     public List<PetResponseDTO> findByTutor(Long tutorId) {
         tutorService.buscarTutor(tutorId);
         return petRepository.findByTutorId(tutorId).stream()
@@ -48,6 +50,7 @@ public class PetService {
                 .toList();
     }
 
+    @Transactional
     public PetResponseDTO update(Long id, PetRequestDTO dto) {
         Pet pet = buscarPet(id);
         Tutor tutor = tutorService.buscarTutor(dto.tutorId());
@@ -55,6 +58,7 @@ public class PetService {
         return PetMapper.toResponseDTO(petRepository.save(pet));
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!petRepository.existsById(id)) {
             throw new ResourceNotFoundException("Pet não encontrado com id " + id);

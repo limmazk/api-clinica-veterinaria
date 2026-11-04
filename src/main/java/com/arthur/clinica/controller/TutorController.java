@@ -6,6 +6,7 @@ import com.arthur.clinica.dto.TutorResponseDTO;
 import com.arthur.clinica.service.PetService;
 import com.arthur.clinica.service.TutorService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,15 +15,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/tutores")
 public class TutorController {
+
     private final TutorService tutorService;
     private final PetService petService;
-
-    public TutorController(TutorService tutorService, PetService petService) {
-        this.tutorService = tutorService;
-        this.petService = petService;
-    }
 
     @PostMapping
     public ResponseEntity<TutorResponseDTO> create(@RequestBody @Valid TutorRequestDTO dto) {

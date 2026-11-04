@@ -2,15 +2,36 @@
 
 API REST para cadastro de tutores, pets e agendamento de consultas.
 
-> **Estado atual:** os dados ficam **em memória** (num `Map` dentro de cada Repository) e são perdidos quando a aplicação reinicia. Banco de dados e autenticação JWT serão adicionados nas próximas etapas.
-
 ## Tecnologias
 
 - Java 17
-- Spring Boot 3.5 (Web, Validation)
+- Spring Boot 3.5 (Web, Validation, Data JPA)
+- PostgreSQL 16 (Docker)
+- Lombok
+- Springdoc OpenAPI (Swagger)
 - Maven
 - JUnit 5 + Mockito
 
+## Como executar
+
+1. Crie o arquivo `.env` na raiz a partir do modelo `.env.example` e preencha a senha.
+2. Suba o banco:
+
+```bash
+docker compose up -d
+```
+
+3. Rode a classe `ClinicaApplication` pela IDE (ou `mvn spring-boot:run`).
+
+- API: `http://localhost:8080`
+- Swagger: `http://localhost:8080/swagger-ui.html`
+- Banco: `localhost:5433`
+
+Testes:
+
+```bash
+mvn test
+```
 
 ## Modelo
 
@@ -24,7 +45,7 @@ API REST para cadastro de tutores, pets e agendamento de consultas.
 ```
 controller  -> recebe a requisição HTTP e devolve ResponseEntity
 service     -> regras de negócio
-repository  -> acesso aos dados (hoje: memória; depois: JPA + banco)
+repository  -> acesso aos dados (Spring Data JPA)
 model       -> classes de domínio e enums
 dto         -> o que entra (Request) e o que sai (Response) da API
 mapper      -> conversão Entity <-> DTO
@@ -75,3 +96,23 @@ exception   -> exceções da aplicação e GlobalExceptionHandler
 - Só consulta `AGENDADA` pode ser alterada, realizada ou cancelada (409).
 - Consulta não é excluída, é cancelada (o histórico fica preservado).
 
+## Formato de erro
+
+```json
+{
+  "status": 400,
+  "message": "Erro de validação",
+  "path": "/tutores",
+  "timestamp": "2026-11-03T16:40:00",
+  "errors": {
+    "email": "E-mail inválido",
+    "telefone": "O telefone deve ter 10 ou 11 dígitos (só números, com DDD)"
+  }
+}
+```
+
+## Próximas etapas
+
+- [x] Banco de dados PostgreSQL com Docker e Spring Data JPA
+- [ ] Autenticação com Spring Security + JWT
+- [ ] Versionamento com Git e publicação no GitHub

@@ -6,6 +6,7 @@ import com.arthur.clinica.model.Pet;
 import com.arthur.clinica.model.Tutor;
 
 public class PetMapper {
+
     private PetMapper() {
     }
 

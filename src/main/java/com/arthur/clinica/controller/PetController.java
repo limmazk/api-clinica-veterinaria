@@ -6,6 +6,7 @@ import com.arthur.clinica.dto.PetResponseDTO;
 import com.arthur.clinica.service.ConsultaService;
 import com.arthur.clinica.service.PetService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,15 +15,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/pets")
 public class PetController {
+
     private final PetService petService;
     private final ConsultaService consultaService;
-
-    public PetController(PetService petService, ConsultaService consultaService) {
-        this.petService = petService;
-        this.consultaService = consultaService;
-    }
 
     @PostMapping
     public ResponseEntity<PetResponseDTO> create(@RequestBody @Valid PetRequestDTO dto) {
