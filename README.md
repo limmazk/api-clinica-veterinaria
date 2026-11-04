@@ -35,9 +35,6 @@ mvn test
 
 ## Modelo
 
-```
-Tutor 1 ──── N Pet 1 ──── N Consulta
-```
 
 - **Tutor**: nome, email (único), telefone
 - **Pet**: nome, especie (`CACHORRO`, `GATO`, `PASSARO`, `OUTRO`), raca, dataNascimento, tutor
@@ -89,8 +86,6 @@ exception   -> exceções da aplicação e GlobalExceptionHandler
 | PUT    | `/consultas/{id}`           | Remarca/altera (se AGENDADA)  | 200     |
 | PATCH  | `/consultas/{id}/realizar`  | Marca como REALIZADA          | 200     |
 | PATCH  | `/consultas/{id}/cancelar`  | Marca como CANCELADA          | 200     |
-
-Exemplos prontos de requisição em [`requisicoes.http`](requisicoes.http).
 
 ## Regras de negócio
 
